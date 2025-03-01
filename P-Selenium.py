@@ -13,7 +13,7 @@ service = Service(GeckoDriverManager().install())
 driver = webdriver.Firefox(service=service, options=options)
 
 # Open a website
-driver.get('https://www.mozilla.org')
+driver.get('https://pmartinasi.es')
 
 # Create a simple Tkinter window to handle close events
 root = tk.Tk()
