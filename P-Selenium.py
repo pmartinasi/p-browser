@@ -1,16 +1,18 @@
 import tkinter as tk
-from tkinter import Entry, Button, Label, Frame
+from tkinter import Entry, Button, Frame
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 
-# Set up Firefox options
+# Ruta manual de GeckoDriver
+GECKODRIVER_PATH = "geckodriver.exe"
+
+# Configurar opciones de Firefox
 options = Options()
-options.headless = False  # Run in visible mode to allow user interaction
+options.headless = False  # Ejecutar en modo visible
 
-# Set up the WebDriver
-service = Service(GeckoDriverManager().install())
+# Configurar el servicio con GeckoDriver manual
+service = Service(GECKODRIVER_PATH)
 driver = webdriver.Firefox(service=service, options=options)
 
 def open_url():
@@ -20,12 +22,10 @@ def open_url():
     driver.get(url)
 
 def go_back():
-    if driver.current_url:
-        driver.back()
+    driver.back()
 
 def go_forward():
-    if driver.current_url:
-        driver.forward()
+    driver.forward()
 
 def refresh_page():
     driver.refresh()
@@ -35,23 +35,23 @@ def on_closing():
     driver.quit()
     root.destroy()
 
-# Create the main Tkinter window
+# Crear la ventana principal
 root = tk.Tk()
 root.title("P-BROWSER")
 
-# Create a frame for the URL bar
+# Crear un frame para la barra de URL
 url_frame = Frame(root)
 url_frame.pack(fill="x", padx=5, pady=5)
 
-# URL entry field
+# Campo de entrada de URL
 url_entry = Entry(url_frame, width=50)
 url_entry.pack(side="left", expand=True, fill="x")
 
-# Go button
+# Botón para ir a la URL
 go_button = Button(url_frame, text="Go", command=open_url)
 go_button.pack(side="left")
 
-# Navigation buttons
+# Crear un frame para los botones de navegación
 nav_frame = Frame(root)
 nav_frame.pack(fill="x", padx=5, pady=5)
 
@@ -64,8 +64,8 @@ forward_button.pack(side="left")
 refresh_button = Button(nav_frame, text="Refresh", command=refresh_page)
 refresh_button.pack(side="left")
 
-# Bind the window close event
+# Vincular el evento de cierre de la ventana
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-# Run the Tkinter event loop
+# Ejecutar el bucle de eventos de Tkinter
 root.mainloop()
